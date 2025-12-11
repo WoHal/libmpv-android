@@ -1,5 +1,6 @@
 # Credit goes to jmir1
 # get versions from source code
+exit 0
 MPV_VERSION=$(cat buildscripts/deps/mpv/_build$1/common/version.h | grep "#define VERSION" | cut -d '"' -f 2)
 LIBPLACEBO_VERSION=$(cat buildscripts/deps/libplacebo/_build$1/src/version.h | grep "#define BUILD_VERSION" | cut -d '"' -f 2)
 FFMPEG_VERSION=$(echo $(cd buildscripts/deps/ffmpeg/ && git rev-parse --short HEAD))

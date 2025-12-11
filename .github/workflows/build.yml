@@ -51,6 +51,7 @@ jobs:
           unset ANDROID_SDK_ROOT
           cd buildscripts
           ./download.sh > /dev/null
+          ./patch.sh > /dev/null
           ./buildall.sh --arch ${{ matrix.architecture }} mpv
           ./buildall.sh -n
 

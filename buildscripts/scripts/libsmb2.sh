@@ -11,16 +11,15 @@ else
 	exit 255
 fi
 
+make distclean
+
 mkdir -p _build$ndk_suffix
-# cd _build$ndk_suffix
+cd _build$ndk_suffix
 
-make clean || sh bootstrap
-
-./configure \
+../configure \
 	--host=$ndk_triple --with-pic \
 	--enable-static --disable-shared \
 	--without-libkrb5
-# cmake ..
 
 make -j$cores
 make DESTDIR="$prefix_dir" install

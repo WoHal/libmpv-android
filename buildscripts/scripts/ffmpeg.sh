@@ -29,7 +29,7 @@ args=(
 	--extra-cflags="-I$prefix_dir/include $cpuflags" --extra-ldflags="-L$prefix_dir/lib"
 
 	--enable-{jni,mediacodec,mbedtls,libdav1d} --disable-vulkan
-	--disable-static --enable-shared --enable-{gpl,version3}
+	--disable-static --enable-shared --enable-version3
 
 	# disable unneeded parts
 	--disable-{stripping,doc,programs}
@@ -41,6 +41,7 @@ args=(
 	--enable-encoder=mjpeg,png
 	# useful for the `dump-cache` command
 	--enable-muxer=mov,matroska,mpegts
+	--enable-libsmb2
 )
 ../configure "${args[@]}"
 
