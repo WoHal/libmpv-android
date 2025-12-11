@@ -20,7 +20,11 @@ fi
 # ffmpeg
 if [ ! -d ffmpeg ]; then
 	git clone https://github.com/FFmpeg/FFmpeg ffmpeg
-	[ $IN_CI -eq 1 ] && git -C ffmpeg checkout $v_ci_ffmpeg
+	git -C ffmpeg checkout $v_ci_ffmpeg
+fi
+
+if [ ! -d libsmb2 ]; then
+	git clone https://github.com/sahlberg/libsmb2
 fi
 
 # freetype2

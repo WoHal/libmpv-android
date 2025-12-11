@@ -3,11 +3,12 @@
 ## Dependency versions
 # Make sure to keep v_ndk and v_ndk_n in sync, both are listed on the NDK download page
 
-v_sdk=11076708_latest
-v_ndk=r28c
-v_ndk_n=28.2.13676358
-v_sdk_platform=35
-v_sdk_build_tools=35.0.0
+v_sdk=13114758_latest
+v_ndk=r29
+v_ndk_n=29.0.14206865
+v_sdk_build_tools=36.1.0
+v_cmake=4.1.2
+v_sdk_platform=36
 
 v_lua=5.2.4
 v_unibreak=6.1
@@ -22,7 +23,8 @@ v_mbedtls=3.6.4
 
 dep_mbedtls=()
 dep_dav1d=()
-dep_ffmpeg=(mbedtls dav1d)
+dep_libsmb2=()
+dep_ffmpeg=(mbedtls dav1d libsmb2)
 dep_freetype2=()
 dep_fribidi=()
 dep_harfbuzz=()
