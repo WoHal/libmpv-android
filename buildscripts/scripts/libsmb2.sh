@@ -14,9 +14,7 @@ fi
 mkdir -p _build$ndk_suffix
 # cd _build$ndk_suffix
 
-make clean
-
-sh bootstrap
+make clean || sh bootstrap
 
 ./configure \
 	--host=$ndk_triple --with-pic \
