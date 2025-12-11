@@ -24,13 +24,6 @@ jobs:
       - name: Export env vars
         run: buildscripts/include/ci.sh export >>$GITHUB_ENV
 
-      - uses: actions/cache@v4
-        with:
-          path: gh-cache/
-          key: "prefix-${{ hashFiles('buildscripts/**.sh') }}"
-          restore-keys: "prefix-"
-          enableCrossOsArchive: true
-
       - name: Install deps
         run: |
           sudo apt-get update
@@ -51,7 +44,7 @@ jobs:
           unset ANDROID_SDK_ROOT
           cd buildscripts
           ./download.sh > /dev/null
-          ./patch.sh > /dev/null
+          ./patch.sh
           ./buildall.sh --arch ${{ matrix.architecture }} mpv
           ./buildall.sh -n
 

@@ -36,7 +36,7 @@ jobs:
           unset ANDROID_SDK_ROOT
           cd buildscripts
           ./download.sh > /dev/null
-          ./patch.sh > /dev/null
+          ./patch.sh
           ./buildall.sh --arch x86 mpv
           ./buildall.sh --arch x86_64 mpv
           ./buildall.sh --arch arm64 mpv

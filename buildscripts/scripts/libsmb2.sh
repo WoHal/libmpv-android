@@ -11,7 +11,7 @@ else
 	exit 255
 fi
 
-make distclean
+make distclean || true
 
 mkdir -p _build$ndk_suffix
 cd _build$ndk_suffix

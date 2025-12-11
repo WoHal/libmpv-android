@@ -49,9 +49,7 @@ fi
 mkdir -p sdk && cd sdk
 
 # Android SDK
-if [ -d "$ANDROID_SDK" ]; then
-	ln -s $ANDROID_SDK "android-sdk-${os}"
-elif [ ! -d "android-sdk-${os}" ]; then
+if [ ! -d "android-sdk-${os}" ]; then
 	echo "Android SDK not found. Downloading commandline tools."
 	$WGET "https://dl.google.com/android/repository/commandlinetools-${os}-${v_sdk}.zip"
 	mkdir "android-sdk-${os}"
