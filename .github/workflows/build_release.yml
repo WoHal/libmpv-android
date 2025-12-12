@@ -40,6 +40,7 @@ jobs:
           ./buildall.sh --arch x86 mpv
           ./buildall.sh --arch x86_64 mpv
           ./buildall.sh --arch arm64 mpv
+          ./buildall.sh --arch armv7l mpv
           ./buildall.sh
         env:
           GRADLE_OPTS: -Xmx4G
