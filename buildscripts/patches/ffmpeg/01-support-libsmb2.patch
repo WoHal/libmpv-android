@@ -1,8 +1,8 @@
 diff --git a/configure b/configure
-index d77a55b653..a873596548 100755
+index 732de59292..d15b9889c8 100755
 --- a/configure
 +++ b/configure
-@@ -195,6 +195,7 @@ External library support:
+@@ -194,6 +194,7 @@ External library support:
    Also note that the following help text describes the purpose of the libraries
    themselves, not all their features will necessarily be usable by FFmpeg.
  
@@ -10,7 +10,7 @@ index d77a55b653..a873596548 100755
    --disable-alsa           disable ALSA support [autodetect]
    --disable-appkit         disable Apple AppKit framework [autodetect]
    --disable-avfoundation   disable Apple AVFoundation framework [autodetect]
-@@ -1856,6 +1857,7 @@ EXTERNAL_AUTODETECT_LIBRARY_LIST="
+@@ -1875,6 +1876,7 @@ EXTERNAL_AUTODETECT_LIBRARY_LIST="
      sndio
      xlib
      zlib
@@ -18,7 +18,7 @@ index d77a55b653..a873596548 100755
  "
  
  EXTERNAL_LIBRARY_GPL_LIST="
-@@ -3816,6 +3818,7 @@ librtmps_protocol_deps="librtmp"
+@@ -3904,6 +3906,7 @@ librtmps_protocol_deps="librtmp"
  librtmpt_protocol_deps="librtmp"
  librtmpte_protocol_deps="librtmp"
  libsmbclient_protocol_deps="libsmbclient gplv3"
@@ -26,11 +26,20 @@ index d77a55b653..a873596548 100755
  libsrt_protocol_deps="libsrt"
  libsrt_protocol_select="network"
  libssh_protocol_deps="libssh"
+@@ -7144,6 +7147,8 @@ enabled libshaderc        && require_pkg_config spirv_compiler "shaderc >= 2019.
+ enabled libshine          && require_pkg_config libshine shine shine/layer3.h shine_encode_buffer
+ enabled libsmbclient      && { check_pkg_config libsmbclient smbclient libsmbclient.h smbc_init ||
+                                require libsmbclient libsmbclient.h smbc_init -lsmbclient; }
++enabled libsmb2           && { check_pkg_config libsmb2 libsmb2 "stdio.h stdlib.h time.h smb2/smb2.h smb2/libsmb2.h" smb2_init_context ||
++                               require libsmb2 libsmb2 "stdio.h stdlib.h time.h smb2/smb2.h smb2/libsmb2.h" smb2_init_context -lsmb2; }
+ enabled libsnappy         && require libsnappy snappy-c.h snappy_compress -lsnappy -lstdc++
+ enabled libsoxr           && require libsoxr soxr.h soxr_create -lsoxr
+ enabled libssh            && require_pkg_config libssh "libssh >= 0.6.0" libssh/sftp.h sftp_init
 diff --git a/libavformat/Makefile b/libavformat/Makefile
-index 7ca68a7036..90a909da35 100644
+index ab5551a735..14eb330cc0 100644
 --- a/libavformat/Makefile
 +++ b/libavformat/Makefile
-@@ -721,6 +721,7 @@ OBJS-$(CONFIG_LIBRTMPS_PROTOCOL)         += librtmp.o
+@@ -732,6 +732,7 @@ OBJS-$(CONFIG_LIBRTMPS_PROTOCOL)         += librtmp.o
  OBJS-$(CONFIG_LIBRTMPT_PROTOCOL)         += librtmp.o
  OBJS-$(CONFIG_LIBRTMPTE_PROTOCOL)        += librtmp.o
  OBJS-$(CONFIG_LIBSMBCLIENT_PROTOCOL)     += libsmbclient.o
@@ -434,10 +443,10 @@ index 0000000000..c7c39e4f69
 +    .flags               = URL_PROTOCOL_FLAG_NETWORK,
 +};
 diff --git a/libavformat/protocols.c b/libavformat/protocols.c
-index 93a6d67261..7b737944c4 100644
+index d394454d41..4045e5fe9e 100644
 --- a/libavformat/protocols.c
 +++ b/libavformat/protocols.c
-@@ -75,6 +75,7 @@ extern const URLProtocol ff_librtmpte_protocol;
+@@ -76,6 +76,7 @@ extern const URLProtocol ff_librtmpte_protocol;
  extern const URLProtocol ff_libsrt_protocol;
  extern const URLProtocol ff_libssh_protocol;
  extern const URLProtocol ff_libsmbclient_protocol;

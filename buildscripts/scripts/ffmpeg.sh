@@ -28,7 +28,7 @@ args=(
 	--arch=${ndk_triple%%-*} --cpu=$cpu
 	--extra-cflags="-I$prefix_dir/include $cpuflags" --extra-ldflags="-L$prefix_dir/lib"
 
-	--enable-{jni,mediacodec,mbedtls,libdav1d} --disable-vulkan
+	--enable-{jni,mediacodec,mbedtls,libdav1d,libsmb2} --disable-vulkan
 	--disable-static --enable-shared --enable-version3
 
 	# disable unneeded parts
@@ -41,7 +41,6 @@ args=(
 	--enable-encoder=mjpeg,png
 	# useful for the `dump-cache` command
 	--enable-muxer=mov,matroska,mpegts
-	--enable-libsmb2
 )
 ../configure "${args[@]}"
 
