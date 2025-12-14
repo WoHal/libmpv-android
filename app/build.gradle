@@ -1,5 +1,3 @@
-import com.vanniktech.maven.publish.SonatypeHost
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.vanniktech.maven.publish'
@@ -55,7 +53,7 @@ task sourceJar(type: Jar) {
 
 afterEvaluate {
     mavenPublishing {
-        publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+        publishToMavenCentral()
         signAllPublications()
         coordinates(
                 getGroupId(),
