@@ -28,8 +28,7 @@ if [ ! -d libsmb2 ]; then
 fi
 
 if [ ! -d libxml2 ]; then
-	git clone --depth 1 https://github.com/GNOME/libxml2.git
-	git -C libxml2 checkout $v_libxml2
+	git clone --depth 1 --branch $v_libxml2 --single-branch https://github.com/GNOME/libxml2.git
 fi
 
 # freetype2
