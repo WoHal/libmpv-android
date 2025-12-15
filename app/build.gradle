@@ -53,7 +53,7 @@ task sourceJar(type: Jar) {
 
 afterEvaluate {
     mavenPublishing {
-        publishToMavenCentral()
+        publishToMavenCentral(true)
         signAllPublications()
         coordinates(
                 getGroupId(),
