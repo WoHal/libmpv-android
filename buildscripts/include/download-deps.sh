@@ -24,11 +24,11 @@ if [ ! -d ffmpeg ]; then
 fi
 
 if [ ! -d libsmb2 ]; then
-	git clone https://github.com/sahlberg/libsmb2
+	git clone --depth 1 https://github.com/sahlberg/libsmb2
 fi
 
 if [ ! -d libxml2 ]; then
-	git clone -depth 1 https://github.com/GNOME/libxml2.git
+	git clone --depth 1 https://github.com/GNOME/libxml2.git
 	git -C libxml2 checkout $v_libxml2
 fi
 
