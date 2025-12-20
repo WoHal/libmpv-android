@@ -97,16 +97,24 @@ jni_func(void, command, jobjectArray jarray) {
 
     const char *arguments[128] = {0};
     int len = env->GetArrayLength(jarray);
+    jstring jstringArray[128] = {0};
     if (len >= ARRAYLEN(arguments))
         die("too many command arguments");
 
-    for (int i = 0; i < len; ++i)
-        arguments[i] = env->GetStringUTFChars((jstring)env->GetObjectArrayElement(jarray, i), NULL);
+    for (int i = 0; i < len; ++i) {
+        jstring javaString = (jstring)env->GetObjectArrayElement(jarray, i);
+        const char* nativeString = env->GetStringUTFChars(javaString, 0);
+
+        jstringArray[i] = javaString;
+        arguments[i] = nativeString;
+    }
 
     mpv_command(g_mpv, arguments);
 
-    for (int i = 0; i < len; ++i)
-        env->ReleaseStringUTFChars((jstring)env->GetObjectArrayElement(jarray, i), arguments[i]);
+    for (int i = 0; i < len; ++i) {
+        env->ReleaseStringUTFChars(jstringArray[i], arguments[i]);
+        env->DeleteLocalRef(jstringArray[i]);
+    }
 }
 
 jni_func(jobject, commandNode, jobjectArray jarray) {
@@ -123,10 +131,12 @@ jni_func(jobject, commandNode, jobjectArray jarray) {
     args.u.list->values = (mpv_node*)malloc(len * sizeof(mpv_node));
 
     for (int i = 0; i < len; ++i) {
-        const char *str = env->GetStringUTFChars((jstring)env->GetObjectArrayElement(jarray, i), NULL);
+        jstring jstr = (jstring)env->GetObjectArrayElement(jarray, i);
+        const char *str = env->GetStringUTFChars(jstr, NULL);
         args.u.list->values[i].format = MPV_FORMAT_STRING;
         args.u.list->values[i].u.string = strdup(str);
-        env->ReleaseStringUTFChars((jstring)env->GetObjectArrayElement(jarray, i), str);
+        env->ReleaseStringUTFChars(jstr, str);
+        env->DeleteLocalRef(jstr);
     }
 
     mpv_node result;

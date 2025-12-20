@@ -42,7 +42,11 @@ jobject mpv_node_to_jobject(JNIEnv *env, const mpv_node *node) {
             for (int i = 0; i < node->u.list->num; i++) {
                 jstring key = env->NewStringUTF(node->u.list->keys[i]);
                 jobject childNode = mpv_node_to_jobject(env, &node->u.list->values[i]);
-                if (childNode) env->CallObjectMethod(hashMap, java_util_HashMap_put, key, childNode);
+                if (childNode) {
+                    env->CallObjectMethod(hashMap, java_util_HashMap_put, key, childNode);
+                    env->DeleteLocalRef(childNode);
+                }
+                if (key) env->DeleteLocalRef(key);
             }
             return env->NewObject(mpv_MPVNode_MapNode, mpv_MPVNode_MapNode_init, hashMap);
         }
